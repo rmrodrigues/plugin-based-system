@@ -1,6 +1,5 @@
 #plugin-based-system
-
-
+This is a simple example of a plugin based system. Simple and easy to learn and very useful when we want to have a scalable system.
 ##Example
 
 ##How it works?
