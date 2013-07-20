@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+	<!-- ArrayList -->
+	<bean id="pluginsListBean" class="java.util.ArrayList" />
+
+	<!-- Plugin Manager -->
+	<bean id="pluginManager" class="org.rmr.spring.pbs.core.plugins.manager.PluginManagerBase"
+		scope="singleton" lazy-init="false">
+		<property name="plugins" ref="pluginsListBean" />
+	</bean>
+
+	<!-- Plugin Base -->
+	<bean id="pluginBase" class="org.rmr.spring.pbs.core.plugin.definition.PluginBase"
+		abstract="true">
+		<property name="pluginManager" ref="pluginManager" />
+	</bean>
+
+
+	<!-- Plugin Definition -->
+	<bean id="personSYS" class="org.rmr.spring.pbs.core.plugins.test.PersonSYS"
+		parent="pluginBase">
+		<property name="pluginName">
+			<value>Person SYS</value>
+		</property>
+		<property name="pluginVendor">
+			<value>Microsoft SYS</value>
+		</property>
+		<property name="pluginVersion">
+			<value>1.1.0</value>
+		</property>
+	</bean>
+
+</beans>
