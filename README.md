@@ -102,5 +102,52 @@ public class PJSon extends PluginBase {
 }
 
 ```
+> **Note:** As a proof of concept the plugin does not create a file, only writes the content to console.
+
+###How to run it?
+There is a class `App` represents a simple test, to test the simple axample you only nedd to run that class. 
+
+```java
+package org.rmr.spring.pbs.core.runnable;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.rmr.spring.pbs.core.plugin.definition.PluginBase;
+import org.rmr.spring.pbs.core.plugins.manager.PluginManager;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class App {
+
+	private static Log LOG = LogFactory.getLog(App.class);
+
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
+	public static void main(String[] args) {
+
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				new String[] { "classpath*:applicationContext.xml" });
+
+		PluginManager pluginManager = (PluginManager) context
+				.getBean("pluginManager");
+
+		LOG.info(pluginManager.size() + " plugins() registered.");
+		
+		Person person = new Person(1, "Rui", "Rodrigues", 25,
+				"Viana do Castelo", "Portugal");
+		
+		for (PluginBase current : pluginManager.plugins()) {
+			current.write(person);
+		}
+	}
+
+}
+
+```
+To inlude a new plugin you need to add the plugin's jar file to the build path.
+
 
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/5961ed27ce1cac22795ec10d7e1c6f9b "githalytics.com")](http://githalytics.com/rmrodrigues/plugin-based-system)
