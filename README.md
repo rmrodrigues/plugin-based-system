@@ -12,9 +12,8 @@ We have a system that saves person data in a file. We need also to save the pers
 
 In the future, probably we will need save it in much more formats, so the system must be prepared to be scalable.
 
-##How it works?
-Fistly we need to have a perception that what entities we need to develop the solution.
-## Entities
+##Entities
+Firstly we need to have a perception that what entities we need to develop the solution.
 Given the example we need to have some entities that will write the person data using a specific format. Those entities we call them as a plugin.
 ###Plugin
 A plugin is a system component that has the function to write the person data in a specific format. The system can has many plugins.
@@ -22,11 +21,13 @@ A plugin is a system component that has the function to write the person data in
 ###Plugin Manager
 We need a entity to manage system plugins, the plugin manager do that work. The Plugin Manager has a reference for all plugins registered.
 
+##Core System
+All system uses Spring Ioc to load plugins. The Plugin Manager provide us information about all plugins. In this example all plugins are loaded by spring and they are registered on plugin manager.
+In the class `App` there is an example how Plugin manager is used. You can adapt this example to a real scenario.
 
-
-###Creating a new plugin
+##Creating a new plugin
 We want to create a plugin to save person data in JSon format.
-#### 1º Step
+### 1º Step
 To create a new plugin you only need create a maven project and put the below configuration on pom.xml file.
 
 ```xml
@@ -47,8 +48,8 @@ To create a new plugin you only need create a maven project and put the below co
 ```
 > **Note:** We are dependent of the plugin-based-system to acces the plugin structure. The gson dependency refers to a JSon libraby that will be used to write person data in json format.
 
-#### 2º Step
-We need create an applicationContext.xml thet will contains the plugin definition. So, the file created must be placed on folder src/main/resources.
+### 2º Step
+We need create an applicationContext.xml that will contains the plugin definition. So, the file created must be placed on folder src/main/resources.
 After create file we need to define the plugin.
 
 ```xml
@@ -66,18 +67,18 @@ After create file we need to define the plugin.
 </bean>
 
 ```
-#####Spring Bean Description
+####Spring Bean Description
 * id -> Bean ID
 * class -> Our class that represents the plugin.
 * parent -> Define the plugin base of "SDK".
 * 
-#####Properties escription
+####Properties escription
 * pluginName -> The plugin Name
 * pluginVersion -> The plugin Version
 * pluginVendor -> The plugin Vendor
 * 
 
-#####Plugin Class
+####Plugin Class
 In this case, we need to create the class `com.rmr.plugin.PJSon`. This class must extends the abstract class `PluginBase`.
 In this plugin exampl, we'll use the library `gson` defined on pom.xml.
 ```java
@@ -104,7 +105,10 @@ public class PJSon extends PluginBase {
 ```
 > **Note:** As a proof of concept the plugin does not create a file, only writes the content to console.
 
-###How to run it?
+##Core System
+
+
+##How to run it?
 There is a class `App` represents a simple test, to test the simple axample you only nedd to run that class. 
 
 ```java
